@@ -1,0 +1,21 @@
+/* .reveal-text {
+	visibility: hidden;
+} */
+
+.line {
+	position: relative;
+	overflow: hidden;
+	display: flex;
+}
+.reveal-alignment-left {
+	text-align: left;
+}
+.reveal-alignment-right {
+	text-align: right;
+}
+.reveal-alignment-center {
+	text-align: center;
+}
+.reveal-alignment-justify {
+	text-align: justify;
+}
