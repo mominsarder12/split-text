@@ -1,3 +1,3 @@
 <?php 
-
+//widgets manager
 ?>

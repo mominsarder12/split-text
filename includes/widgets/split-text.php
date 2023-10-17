@@ -46,10 +46,12 @@ class SplitText extends \Elementor\Widget_Base
 				'label' => esc_html__('Title', 'stp'),
 				'type' => \Elementor\Controls_Manager::TEXTAREA,
 				'default' => esc_html__('Split Heading Widget by Momin Sarder', 'stp'),
+
 				'label_block' => true,
 				'dynamic' => [
 					'active' => true
-				],
+				]
+
 
 			]
 		);
@@ -74,7 +76,24 @@ class SplitText extends \Elementor\Widget_Base
 			]
 		);
 
-
+		$this->add_control(
+			'title_link',
+			[
+				'label' => esc_html__('Link', 'stp'),
+				'type' => \Elementor\Controls_Manager::URL,
+				'options' => ['url', 'is_external', 'nofollow'],
+				'default' => [
+					'url' => '',
+					'is_external' => false,
+					'nofollow' => false,
+					// 'custom_attributes' => '',
+				],
+				'label_block' => true,
+				'dynamic' => [
+					'active' => true
+				],
+			]
+		);
 
 		$this->end_controls_section();
 
@@ -119,8 +138,40 @@ class SplitText extends \Elementor\Widget_Base
 		$settings = $this->get_settings_for_display();
 		$title = $settings['title'];
 		$heading_tag = $settings['heading_tag'];
+		$heading_link = $settings['title_link']['url'];
+
+		$this->add_inline_editing_attributes('title', 'none');
+
+		if ($heading_link) {
 ?>
-		<<?php echo $heading_tag; ?> class="reveal-text"><?php echo esc_html($title); ?></<?php echo $heading_tag; ?>>
-<?php
+			<a href="<?php echo $heading_link; ?>">
+			<?php
+		}
+			?>
+			<<?php echo $heading_tag . " " . $this->get_render_attribute_string('title'); ?> class="reveal-text"><?php echo esc_html($title); ?></<?php echo $heading_tag; ?>>
+			<?php
+			if ($heading_link) {
+			?>
+			</a>
+		<?php
+			}
+		}
+
+
+		protected function content_template()
+		{
+		?>
+		<# view.addInlineEditingAttributes( 'title' , 'none' ); #>
+
+			<# if (settings.title_link) { #>
+				<a href="{{{ settings.title_link.url }}}">
+					<# } #>
+						<{{{settings.heading_tag }}} {{{ view.getRenderAttributeString( 'title' ) }}} class="reveal-text">
+							{{{ settings.title }}}
+						</{{{settings.heading_tag }}}>
+						<# if (settings.title_link) { #>
+				</a>
+				<# } #>
+			<?php
+		}
 	}
-}

@@ -254,7 +254,6 @@ final class Plugin
 		require_once(__DIR__ . '/includes/widgets/split-text.php');
 		
 
-
 		$widgets_manager->register(new SplitText());
 
 	}

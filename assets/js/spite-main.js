@@ -1,4 +1,6 @@
-// USING SPLITTING.JS
+/** USING SPLITTING.JS
+* collected by
+**/
 
 window.addEventListener("load", function () {
 	let revealText = document.querySelectorAll(".reveal-text");

@@ -1,0 +1,3 @@
+<?php 
+// controls manager
+?>
