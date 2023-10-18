@@ -101,7 +101,6 @@ class SplitText extends \Elementor\Widget_Base
 
 
 		// Style Tab Start
-
 		$this->start_controls_section(
 			'section_title_style',
 			[
@@ -120,6 +119,7 @@ class SplitText extends \Elementor\Widget_Base
 				],
 			]
 		);
+
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			[
@@ -130,6 +130,7 @@ class SplitText extends \Elementor\Widget_Base
 
 		$this->end_controls_section();
 
+
 		// Style Tab End
 
 	}
@@ -139,39 +140,63 @@ class SplitText extends \Elementor\Widget_Base
 		$title = $settings['title'];
 		$heading_tag = $settings['heading_tag'];
 		$heading_link = $settings['title_link']['url'];
+		$el_class = !empty($settings['el_class']) ? ' ' . esc_attr($settings['el_class']) : '';
 
+		// Add inline editing attribute for the 'title' control
 		$this->add_inline_editing_attributes('title', 'none');
 
 		if ($heading_link) {
+			echo '<a href="' . esc_url($heading_link) . '">';
+		}
+
+		echo '<' . $heading_tag . ' class="reveal-text elementor-inline-editing' . $el_class . '" ' . $this->get_render_attribute_string('title') . '>';
+
+		echo esc_html($title);
+		echo '</' . esc_html($heading_tag) . '>';
+
+		if ($heading_link) {
+			echo '</a>';
+		}
+	}
+
+	protected function content_template()
+	{
 ?>
-			<a href="<?php echo $heading_link; ?>">
-			<?php
-		}
-			?>
-			<<?php echo $heading_tag . " " . $this->get_render_attribute_string('title'); ?> class="reveal-text"><?php echo esc_html($title); ?></<?php echo $heading_tag; ?>>
-			<?php
-			if ($heading_link) {
-			?>
-			</a>
-		<?php
-			}
-		}
-
-
-		protected function content_template()
-		{
-		?>
-		<# view.addInlineEditingAttributes( 'title' , 'none' ); #>
+		<# view.addInlineEditingAttributes('title', 'none' ); #>
 
 			<# if (settings.title_link) { #>
-				<a href="{{{ settings.title_link.url }}}">
+				<a href="{{ settings.title_link.url }}">
 					<# } #>
-						<{{{settings.heading_tag }}} {{{ view.getRenderAttributeString( 'title' ) }}} class="reveal-text">
-							{{{ settings.title }}}
-						</{{{settings.heading_tag }}}>
+						<{{ settings.heading_tag }} class="reveal-text {{ settings.el_class }} elementor-text-color-{{ settings.title_color }} elementor-element-{{ view.getRenderAttributeString('title')['data-id'] }}{{ view.getRenderAttributeString('title') }}">
+							{{ settings.title }}
+						</{{ settings.heading_tag }}>
 						<# if (settings.title_link) { #>
 				</a>
 				<# } #>
 			<?php
 		}
 	}
+
+	/*
+	protected function render() {
+		$settings = $this->get_settings_for_display();
+		$title = $settings['title'];
+		$heading_tag = $settings['heading_tag'];
+		$heading_link = $settings['title_link']['url'];
+		$el_class = !empty($settings['el_class']) ? ' ' . esc_attr($settings['el_class']) : '';
+	
+		$this->add_inline_editing_attributes('title', 'none');
+	
+		if ($heading_link) {
+			echo '<a href="' . esc_url($heading_link) . '">';
+		}
+	
+		echo '<' . $heading_tag . ' class="reveal-text' . $el_class . '" data-elementor-setting-key="title">';
+		echo esc_html($title);
+		echo '</' . $heading_tag . '>';
+	
+		if ($heading_link) {
+			echo '</a>';
+		}
+	}
+	*/

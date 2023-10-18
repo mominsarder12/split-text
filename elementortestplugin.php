@@ -259,4 +259,6 @@ final class Plugin
 	}
 }
 
+
+
 \Plugin::instance();
