@@ -138,6 +138,8 @@ class SplitText extends \Elementor\Widget_Base
 	{
 		$settings = $this->get_settings_for_display();
 		$title = $settings['title'];
+		$is_external = $settings['title_link']['is_external'];
+		$no_follow =  $settings['title_link']['nofollow'];
 		$heading_tag = $settings['heading_tag'];
 		$heading_link = $settings['title_link']['url'];
 		$el_class = !empty($settings['el_class']) ? ' ' . esc_attr($settings['el_class']) : '';
@@ -146,7 +148,7 @@ class SplitText extends \Elementor\Widget_Base
 		$this->add_inline_editing_attributes('title', 'none');
 
 		if ($heading_link) {
-			echo '<a href="' . esc_url($heading_link) . '">';
+			echo '<a href="' . esc_url($heading_link) . '"' . 'target="' . ($is_external == true ? '_blank' : '') . '"' . 'rel="'.($no_follow == true ? 'nofollow' : '') .'"'.'>';
 		}
 
 		echo '<' . $heading_tag . ' class="reveal-text elementor-inline-editing' . $el_class . '" ' . $this->get_render_attribute_string('title') . '>';
